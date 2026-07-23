@@ -1,4 +1,48 @@
 import Image from 'next/image';
+import Reveal from './Reveal';
+import { toWords } from './words';
+import FadeIn from './FadeIn';
+
+const headingWords = [
+  ...toWords('The person'),
+  '\n',
+  ...toWords('behind the work').map((w, i) => (
+    <span key={`about-accent-${i}`} style={{ fontStyle: 'italic', color: 'var(--accent)' }}>
+      {w}
+    </span>
+  )),
+];
+
+const paragraphs = [
+  <>
+    I&apos;m Michael, a Product Engineer from Nairobi who&apos;s spent the last
+    few years building AI-native systems across two continents. I&apos;ve
+    learned{' '}
+    <strong className="text-accent font-semibold">
+      what makes technology actually useful
+    </strong>{' '}
+    to the people it&apos;s meant to serve.
+  </>,
+  <>
+    I&apos;ve worked on speaker pipelines for European startup conferences,
+    solar energy platforms, and personal knowledge tools. The domains are
+    different. The approach stays the same:{' '}
+    <strong className="text-accent font-semibold">
+      understand the person first, then build the thing
+    </strong>
+    .
+  </>,
+  <>
+    When I&apos;m not building, I&apos;m probably at the gym, playing football
+    weekly, or in a conversation going in five directions at once. I like it
+    that way.
+  </>,
+  <>
+    I&apos;m always open to interesting people working on things that matter.
+    If that&apos;s you,{' '}
+    <strong className="text-accent font-semibold">let&apos;s talk</strong>.
+  </>,
+];
 
 export default function About() {
   return (
@@ -33,7 +77,7 @@ export default function About() {
           alignItems: 'start',
         }}
       >
-        {/* Left — text */}
+        {/* Left: text */}
         <div>
           <h2
             style={{
@@ -45,30 +89,22 @@ export default function About() {
               marginBottom: '32px',
             }}
           >
-            The person
-            <br />
-            <span style={{ fontStyle: 'italic', color: 'var(--accent)' }}>
-              behind the work
-            </span>
+            <Reveal items={headingWords} stagger={45} />
           </h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {[
-              "I'm Michael — a Product Engineer from Nairobi who's spent the last few years building AI-native systems across two continents, learning what actually makes technology useful for the people it's supposed to serve.",
-              "I've worked on speaker pipelines for European startup conferences, solar energy platforms, and personal knowledge tools. The domains are different. The approach is always the same — understand the person first, then build the thing.",
-              "When I'm not building, I'm probably at the gym, playing football weekly, or in a conversation going in five directions at once. I like it that way.",
-              "I'm always open to interesting people working on things that matter. If that's you — let's talk.",
-            ].map((para, i) => (
-              <p
-                key={i}
-                style={{
-                  fontSize: '16px',
-                  color: 'var(--text-muted)',
-                  lineHeight: 1.75,
-                }}
-              >
-                {para}
-              </p>
+            {paragraphs.map((para, i) => (
+              <FadeIn key={i} delay={i * 80}>
+                <p
+                  style={{
+                    fontSize: '16px',
+                    color: 'var(--text-muted)',
+                    lineHeight: 1.75,
+                  }}
+                >
+                  {para}
+                </p>
+              </FadeIn>
             ))}
           </div>
 
@@ -98,8 +134,8 @@ export default function About() {
           </div>
         </div>
 
-        {/* Right — photos */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {/* Right: photos */}
+        <FadeIn delay={120} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {/* Primary photo */}
           <div
             style={{
@@ -151,7 +187,7 @@ export default function About() {
               </p>
             </div>
           </div>
-        </div>
+        </FadeIn>
       </div>
     </section>
   );

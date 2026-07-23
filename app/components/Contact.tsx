@@ -1,3 +1,17 @@
+import Reveal from './Reveal';
+import { toWords } from './words';
+import WovenBand from './WovenBand';
+
+const headingWords = [
+  ...toWords("I'm not hard"),
+  '\n',
+  ...toWords('to reach.').map((w, i) => (
+    <span key={`contact-accent-${i}`} style={{ fontStyle: 'italic', color: 'var(--accent-light)' }}>
+      {w}
+    </span>
+  )),
+];
+
 export default function Contact() {
   return (
     <section
@@ -8,6 +22,7 @@ export default function Contact() {
         margin: '0 auto',
       }}
     >
+      <WovenBand />
       <div
         style={{
           borderRadius: '24px',
@@ -56,11 +71,7 @@ export default function Contact() {
               marginBottom: '24px',
             }}
           >
-            I&apos;m not hard
-            <br />
-            <span style={{ fontStyle: 'italic', color: 'var(--accent-light)' }}>
-              to reach.
-            </span>
+            <Reveal items={headingWords} stagger={45} />
           </h2>
 
           <p
@@ -73,7 +84,11 @@ export default function Contact() {
             }}
           >
             If you have an interesting problem, a project you&apos;re
-            building, or you just want to connect — my inbox is open.
+            building, or you just want to connect,{' '}
+            <strong className="text-accent-light font-semibold">
+              my inbox is open
+            </strong>
+            .
           </p>
 
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>

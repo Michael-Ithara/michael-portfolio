@@ -1,3 +1,10 @@
+import Reveal from './Reveal';
+import { toWords } from './words';
+
+const heroLine1 = toWords('Most builders start');
+const heroLine2 = toWords('with the solution.');
+const heroLine3 = toWords('who has the problem.');
+
 export default function Hero() {
   return (
     <section
@@ -42,7 +49,6 @@ export default function Hero() {
 
       {/* Headline */}
       <h1
-        className="animate-fade-up delay-2"
         style={{
           fontFamily: 'Fraunces, serif',
           fontSize: 'clamp(40px, 6vw, 80px)',
@@ -54,15 +60,23 @@ export default function Hero() {
           maxWidth: '900px',
         }}
       >
-        Most builders start
-        <br />
-        with the solution.
-        <br />
-        <span style={{ fontStyle: 'italic', color: 'var(--accent)' }}>
-          I start with the person
-        </span>
-        <br />
-        who has the problem.
+        <Reveal
+          triggerOnMount
+          stagger={55}
+          items={[
+            ...heroLine1,
+            '\n',
+            ...heroLine2,
+            '\n',
+            ...['I', 'start', 'with', 'the', 'person'].map((w, i) => (
+              <span key={`accent-${i}`} style={{ fontStyle: 'italic', color: 'var(--accent)' }}>
+                {w}
+              </span>
+            )),
+            '\n',
+            ...heroLine3,
+          ]}
+        />
       </h1>
 
       {/* Subline */}
@@ -76,9 +90,12 @@ export default function Hero() {
           marginBottom: '48px',
         }}
       >
-        I&apos;m Michael Kihuyu — a Product Engineer building AI-native
-        systems that work because they&apos;re designed around the humans
-        inside them.
+        I&apos;m Michael Kihuyu, a Product Engineer building AI-native systems
+        that work because they&apos;re{' '}
+        <strong className="text-accent font-semibold">
+          designed around the humans inside them
+        </strong>
+        .
       </p>
 
       {/* CTAs */}

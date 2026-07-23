@@ -93,6 +93,22 @@ body::before {
 .delay-4 { animation-delay: 0.45s; opacity: 0; }
 .delay-5 { animation-delay: 0.6s; opacity: 0; }
 
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Site-wide contour backdrop: slow ambient drift, pure transform (cheap) */
+@keyframes contourDrift {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(-2%, 1.5%); }
+}
+.bg-contours {
+  animation: contourDrift 46s ease-in-out infinite alternate;
+}
+
 /* Hover underline for links */
 .accent-link {
   position: relative;

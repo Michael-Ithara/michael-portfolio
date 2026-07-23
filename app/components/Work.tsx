@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import FadeIn from './FadeIn';
 
 const projects = [
   {
@@ -7,7 +8,9 @@ const projects = [
     label: 'Conference Operations · Estonia · 2026',
     title: 'Latitude59 Speaker Portal',
     summary: '80 speakers. Two problems feeding each other. One system to solve both.',
-    body: "Speakers had no clear journey. Organisers had no visibility. We built a two-sided platform that fixed both — from a blank page to a live production system managing one of Europe's top startup conferences.",
+    before: 'Speakers had no clear journey. Organisers had no visibility. We built a two-sided platform that ',
+    bold: 'fixed both',
+    after: ": from a blank page to a live production system for one of Europe's top startup conferences.",
     tags: ['Two-sided platform', 'Pipeline system', 'Production deployment'],
     liveUrl: null,
   },
@@ -16,8 +19,10 @@ const projects = [
     label: 'Personal Knowledge Tool · 2026',
     title: 'Second Brain',
     summary: 'Most people store knowledge. Almost nobody can find it when they need it.',
-    body: "I built a RAG-powered knowledge engine that lets you capture notes, articles, and URLs — then have an actual conversation with everything you've ever saved.",
-    tags: ['RAG / Vector search', 'Claude API', 'Live — in development'],
+    before: 'I built a RAG-powered knowledge engine that lets you capture notes, articles, and URLs, then have ',
+    bold: 'an actual conversation',
+    after: " with everything you've ever saved.",
+    tags: ['RAG / Vector search', 'Claude API', 'In active development'],
     liveUrl: 'https://the-second-brain.netlify.app',
   },
   {
@@ -25,7 +30,9 @@ const projects = [
     label: 'Solar Energy Platform · 2025',
     title: 'Solarios',
     summary: "People with solar panels still don't understand their own energy.",
-    body: 'Solarios gives homeowners real-time visibility into their consumption, AI-powered recommendations to cut costs, and behavioural nudges to build sustainable habits. Final year project. Got an A.',
+    before: 'Solarios gives homeowners real-time visibility into their consumption, AI-powered recommendations to cut costs, and ',
+    bold: 'behavioural nudges to build sustainable habits',
+    after: '. Final year project. Got an A.',
     tags: ['AI energy insights', 'Real-time monitoring', 'Behaviour change design'],
     liveUrl: 'https://solarios-v2.vercel.app',
   },
@@ -59,8 +66,8 @@ export default function Work() {
       {/* Project cards */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
         {projects.map((project, i) => (
+          <FadeIn key={project.slug} delay={i * 100}>
           <div
-            key={project.slug}
             className="project-card"
           >
             <div style={{ padding: '40px 48px' }}>
@@ -135,7 +142,9 @@ export default function Work() {
                   marginBottom: '32px',
                 }}
               >
-                {project.body}
+                {project.before}
+                <strong className="text-accent font-semibold">{project.bold}</strong>
+                {project.after}
               </p>
 
               {/* Tags */}
@@ -213,6 +222,7 @@ export default function Work() {
               className="card-bar"
             />
           </div>
+          </FadeIn>
         ))}
       </div>
     </section>

@@ -1,4 +1,93 @@
+import { Fragment } from 'react';
 import Link from 'next/link';
+import Reveal from '../../components/Reveal';
+import FadeIn from '../../components/FadeIn';
+
+const strong = (text: string, key: string) => (
+  <strong key={key} className="text-accent font-semibold">
+    {text}
+  </strong>
+);
+
+const headingWords = [
+  <span key="solarios-accent" style={{ fontStyle: 'italic', color: 'var(--accent)' }}>
+    Solarios
+  </span>,
+];
+
+const SECTIONS = [
+  {
+    heading: 'The problem',
+    paragraphs: [
+      <Fragment key="p1">
+        Millions of households have solar panels. Most of them have no real
+        idea how those panels are performing, when they&apos;re saving money
+        versus drawing from the grid, or what habits are quietly costing
+        them.
+      </Fragment>,
+      <Fragment key="p2">
+        The data exists. It just isn&apos;t legible or actionable for the
+        average homeowner. Monitoring tools show numbers.{' '}
+        {strong('Nobody changes their behaviour because of a number', 'p2-b')}.
+      </Fragment>,
+    ],
+  },
+  {
+    heading: 'What I built',
+    paragraphs: [
+      <Fragment key="p1">
+        Solarios is a solar energy management platform that gives homeowners
+        real-time visibility into their energy ecosystem: not just numbers on
+        a screen,{' '}
+        {strong("actual intelligence about what's happening and what to do about it", 'p1-b')}.
+      </Fragment>,
+      <Fragment key="p2">
+        The dashboard shows live consumption versus solar production, battery
+        level, grid dependence, and cost comparisons. An AI insights engine
+        analyses usage patterns and generates personalised recommendations:
+        which appliances to shift, when to use high-draw devices, how to
+        reduce peak-hour grid dependency.
+      </Fragment>,
+      <Fragment key="p3">
+        The appliance management layer lets users monitor individual devices,
+        flag high-usage patterns, and understand exactly where their energy
+        is going. A forecasting layer projects next month&apos;s consumption
+        and estimated cost based on real behaviour.
+      </Fragment>,
+    ],
+  },
+  {
+    heading: 'The design intention',
+    paragraphs: [
+      <Fragment key="p1">
+        Solarios isn&apos;t just a monitoring tool. It&apos;s{' '}
+        {strong('a behaviour change system', 'p1-b')}. The goal was never to
+        show people data. It was to change how they relate to their energy
+        consumption over time.
+      </Fragment>,
+      <Fragment key="p2">
+        Every insight, every recommendation, every notification is designed
+        around a simple question: does this help someone make a better
+        decision today?
+      </Fragment>,
+    ],
+  },
+  {
+    heading: 'The outcome',
+    paragraphs: [
+      <Fragment key="p1">
+        Final year capstone at Strathmore University. Built with real IoT
+        simulation validated against actual datasets. Graded with
+        distinction.
+      </Fragment>,
+      <Fragment key="p2">
+        A genuine proof that AI-powered recommendations can make sustainable
+        energy behaviour accessible: not just to engineers, but to{' '}
+        {strong('anyone with a solar panel and a phone', 'p2-b')}.
+      </Fragment>,
+    ],
+  },
+];
 
 export default function Solarios() {
   return (
@@ -13,7 +102,7 @@ export default function Solarios() {
       </span>
 
       <h1 style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 600, color: 'var(--text)', lineHeight: 1.05, marginBottom: '24px' }}>
-        <span style={{ fontStyle: 'italic', color: 'var(--accent)' }}>Solarios</span>
+        <Reveal items={headingWords} stagger={60} />
       </h1>
 
       <p style={{ fontSize: '20px', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '64px', maxWidth: '580px' }}>
@@ -21,7 +110,9 @@ export default function Solarios() {
       </p>
 
       {/* Meta */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', padding: '32px', borderRadius: '16px', background: 'var(--surface)', border: '1px solid var(--border)', marginBottom: '64px' }}>
+      <FadeIn
+        style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', padding: '32px', borderRadius: '16px', background: 'var(--surface)', border: '1px solid var(--border)', marginBottom: '64px' }}
+      >
         {[
           { label: 'Role', value: 'Solo builder' },
           { label: 'Context', value: 'Final year capstone' },
@@ -33,40 +124,10 @@ export default function Solarios() {
             <span style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text)' }}>{item.value}</span>
           </div>
         ))}
-      </div>
+      </FadeIn>
 
-      {[
-        {
-          heading: 'The problem',
-          paragraphs: [
-            "Millions of households have solar panels. Most of them have no real idea how those panels are performing, when they're saving money versus drawing from the grid, or what habits are quietly costing them.",
-            "The data exists — it just isn't legible or actionable for the average homeowner. Monitoring tools show numbers. Nobody changes their behaviour because of a number.",
-          ],
-        },
-        {
-          heading: 'What I built',
-          paragraphs: [
-            "Solarios is a solar energy management platform that gives homeowners real-time visibility into their energy ecosystem. Not just numbers on a screen — actual intelligence about what's happening and what to do about it.",
-            "The dashboard shows live consumption versus solar production, battery level, grid dependence, and cost comparisons. An AI insights engine analyses usage patterns and generates personalised recommendations — which appliances to shift, when to use high-draw devices, how to reduce peak-hour grid dependency.",
-            "The appliance management layer lets users monitor individual devices, flag high-usage patterns, and understand exactly where their energy is going. A forecasting layer projects next month's consumption and estimated cost based on real behaviour.",
-          ],
-        },
-        {
-          heading: 'The design intention',
-          paragraphs: [
-            "Solarios isn't just a monitoring tool. It's a behaviour change system. The goal was never to show people data — it was to change how they relate to their energy consumption over time.",
-            "Every insight, every recommendation, every notification is designed around a simple question: does this help someone make a better decision today?",
-          ],
-        },
-        {
-          heading: 'The outcome',
-          paragraphs: [
-            "Final year capstone at Strathmore University. Built with real IoT simulation validated against actual datasets. Graded with distinction.",
-            "A genuine proof that AI-powered recommendations can make sustainable energy behaviour accessible — not just to engineers, but to anyone with a solar panel and a phone.",
-          ],
-        },
-      ].map((section) => (
-        <div key={section.heading} style={{ marginBottom: '56px' }}>
+      {SECTIONS.map((section) => (
+        <FadeIn key={section.heading} style={{ marginBottom: '56px' }}>
           <h2 style={{ fontFamily: 'Fraunces, serif', fontSize: '24px', fontWeight: 600, color: 'var(--text)', marginBottom: '20px' }}>
             {section.heading}
           </h2>
@@ -76,7 +137,7 @@ export default function Solarios() {
             </p>
           ))}
           <div style={{ height: '1px', background: 'var(--border)', marginTop: '48px' }} />
-        </div>
+        </FadeIn>
       ))}
 
       <a
