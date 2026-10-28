@@ -58,8 +58,8 @@ export default function Reveal({
         style={{
           display: 'inline-block',
           opacity: visible ? 1 : 0,
-          transform: visible ? 'translateY(0)' : 'translateY(0.35em)',
-          transition: `opacity 0.5s ease ${idx * stagger}ms, transform 0.5s ease ${idx * stagger}ms`,
+          transform: visible ? 'translateY(0)' : 'translateY(0.3em)',
+          transition: `opacity 0.8s var(--ease-apple) ${idx * stagger}ms, transform 0.8s var(--ease-apple) ${idx * stagger}ms`,
         }}
       >
         {item}

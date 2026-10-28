@@ -1,162 +1,73 @@
+import Image from 'next/image';
 import Reveal from './Reveal';
 import { toWords } from './words';
+import { Button, ChevronLink } from './ui';
 
-const heroLine1 = toWords('Most builders start');
-const heroLine2 = toWords('with the solution.');
-const heroLine3 = toWords('who has the problem.');
+const portrait = (
+  <span
+    key="portrait"
+    className="relative mx-[0.04em] inline-block h-[0.92em] w-[0.92em] translate-y-[0.1em] overflow-hidden rounded-[24%] bg-surface align-baseline shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)] ring-1 ring-black/5"
+  >
+    <Image
+      src="/michael-about.jpg"
+      alt=""
+      fill
+      preload
+      sizes="96px"
+      className="object-cover object-top"
+    />
+  </span>
+);
+
+const headline = [
+  ...toWords('Hi, I’m'),
+  portrait,
+  'Michael.',
+  '\n',
+  ...toWords('Most builders start with the solution.').map((w, i) => (
+    <span key={`lead-${i}`} className="text-faint">
+      {w}
+    </span>
+  )),
+  ...toWords('I start with'),
+  <span key="accent" className="whitespace-nowrap text-accent">
+    the person
+  </span>,
+  ...toWords('who has the problem.'),
+];
 
 export default function Hero() {
   return (
-    <section
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        padding: '120px 24px 80px',
-        maxWidth: '1100px',
-        margin: '0 auto',
-      }}
-    >
-      {/* Availability badge */}
-      <div className="animate-fade-up delay-1" style={{ marginBottom: '40px' }}>
-        <span
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            fontSize: '12px',
-            fontWeight: 500,
-            padding: '6px 14px',
-            borderRadius: '999px',
-            background: 'var(--surface)',
-            border: '1px solid var(--border)',
-            color: 'var(--text-muted)',
-          }}
-        >
-          <span
-            style={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              background: 'var(--accent)',
-              display: 'inline-block',
-            }}
-          />
-          Open to interesting projects
+    <section className="mx-auto max-w-[1120px] px-4 pb-16 pt-32 sm:px-6 md:pb-24 md:pt-44">
+      <div className="animate-fade-up delay-1 mb-8">
+        <span className="inline-flex items-center gap-2 rounded-full bg-surface px-4 py-2 text-[14px] font-medium text-text shadow-[0_1px_2px_rgba(0,0,0,0.06)]">
+          <span className="relative flex size-2">
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60 motion-reduce:hidden" />
+            <span className="relative inline-flex size-2 rounded-full bg-accent" />
+          </span>
+          Building Onboarder
         </span>
       </div>
 
-      {/* Headline */}
-      <h1
-        style={{
-          fontFamily: 'Fraunces, serif',
-          fontSize: 'clamp(40px, 6vw, 80px)',
-          fontWeight: 600,
-          lineHeight: 1.05,
-          letterSpacing: '-0.02em',
-          color: 'var(--text)',
-          marginBottom: '28px',
-          maxWidth: '900px',
-        }}
-      >
-        <Reveal
-          triggerOnMount
-          stagger={55}
-          items={[
-            ...heroLine1,
-            '\n',
-            ...heroLine2,
-            '\n',
-            ...['I', 'start', 'with', 'the', 'person'].map((w, i) => (
-              <span key={`accent-${i}`} style={{ fontStyle: 'italic', color: 'var(--accent)' }}>
-                {w}
-              </span>
-            )),
-            '\n',
-            ...heroLine3,
-          ]}
-        />
+      <h1 className="mb-10 max-w-[1000px] text-[clamp(40px,6.2vw,84px)] font-semibold leading-[1.04] tracking-[-0.035em] text-text">
+        <span className="sr-only">
+          Hi, I’m Michael. Most builders start with the solution. I start with the person who
+          has the problem.
+        </span>
+        <span aria-hidden="true">
+          <Reveal triggerOnMount stagger={40} items={headline} />
+        </span>
       </h1>
 
-      {/* Subline */}
-      <p
-        className="animate-fade-up delay-3"
-        style={{
-          fontSize: 'clamp(16px, 2vw, 20px)',
-          color: 'var(--text-muted)',
-          lineHeight: 1.7,
-          maxWidth: '520px',
-          marginBottom: '48px',
-        }}
-      >
-        I&apos;m Michael Kihuyu, a Product Engineer building AI-native systems
-        that work because they&apos;re{' '}
-        <strong className="text-accent font-semibold">
-          designed around the humans inside them
-        </strong>
-        .
-      </p>
-
-      {/* CTAs */}
-      <div
-        className="animate-fade-up delay-4"
-        style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}
-      >
-        <a
-          href="#work"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '12px 28px',
-            borderRadius: '999px',
-            background: 'var(--accent-dark)',
-            color: 'var(--bg)',
-            fontSize: '14px',
-            fontWeight: 500,
-            textDecoration: 'none',
-            transition: 'background 0.2s ease',
-          }}
-        >
-          See my work ↓
-        </a>
-
-        <a
-          href="mailto:mkihuyu020@gmail.com"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '12px 28px',
-            borderRadius: '999px',
-            border: '1px solid var(--border)',
-            color: 'var(--text)',
-            fontSize: '14px',
-            fontWeight: 500,
-            textDecoration: 'none',
-            transition: 'border-color 0.2s ease',
-          }}
-        >
-          Get in touch
-        </a>
-      </div>
-
-      {/* Scroll hint */}
-      <div
-        className="animate-fade-up delay-5"
-        style={{
-          marginTop: '80px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-          color: 'var(--text-faint)',
-        }}
-      >
-        <div style={{ width: '1px', height: '48px', background: 'var(--border)' }} />
-        <span style={{ fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-          Scroll to explore
-        </span>
+      <div className="animate-fade-up delay-4 flex flex-col gap-8 md:flex-row md:items-center md:gap-10">
+        <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-4">
+          <Button href="#work">See my work</Button>
+          <ChevronLink href="mailto:mkihuyu020@gmail.com">Get in touch</ChevronLink>
+        </div>
+        <p className="max-w-[520px] text-[clamp(17px,1.6vw,21px)] leading-[1.45] tracking-[-0.01em] text-muted">
+          Product Engineer in Nairobi. I build AI-native systems that work because they&apos;re{' '}
+          <strong className="font-semibold text-text">designed around the humans inside them</strong>.
+        </p>
       </div>
     </section>
   );

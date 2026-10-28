@@ -28,9 +28,17 @@ not optimizing for job security — the goal is visibility and identity.
 **Why "Product Engineer," not "Software Engineer":** deliberate signal of stakeholder
 thinking and outcome-ownership over pure technical execution. Locked, no hedging in copy.
 
-**Real-world context:** Nairobi-based, freelances at Vula (African fintech, pre-investment
-team), finishing a BSc in Business Information Technology at Strathmore University
-(June 2026). Background spans Kenya and Estonia (two continents — keep it at two, not
+**Real-world context:** Nairobi-based. Forward Deployed Engineer at Vula, which helps
+SMEs and financial institutions close Africa's $400Bn SME funding gap; he embeds with
+funding partners and builds the application-to-term-sheet pipelines (site copy says
+"We're closing...", written as part of Vula, not as a contractor). Vula and Anzisha are
+never a case study; Vula only appears as the "Now" tile in About. Currently building
+Onboarder (https://onboarder.work/), a **team product with his cofounders**: always say
+"we" / "with my cofounders", never imply he built it alone. It is the productised
+version of the Latitude59 speaker portal; the Hero status pill says "Building
+Onboarder". Graduated in 2026 with a BSc in Business Information Technology from
+Strathmore University. No testimonials yet; don't add a testimonials section until
+Michael has one. Background spans Kenya and Estonia (two continents — keep it at two, not
 three, in any copy). Career arc framed as Product Engineer → PM → VP Product.
 
 ## 2. Identity & voice
@@ -42,15 +50,19 @@ Copy rules for anything written in his voice (hero, about, case studies):
 - First person, direct, no filler ("leverage", "seamless", "cutting-edge").
 - Short declarative sentences mixed with one longer one per paragraph: the existing
   copy already does this; match its cadence.
-- One italicized accent phrase per major heading (see `Hero.tsx`, `About.tsx`,
-  `Contact.tsx` for the pattern: plain line, plain line, `<span style={fontStyle:
-  italic, color: accent}>` line).
+- One accent phrase per major heading, shown by colour, not italics. The pattern is a
+  grey lead-in (`text-faint`) followed by the statement in `text-text`, with at most
+  one short phrase in an accent colour: `text-accent` (orange) when the phrase is about
+  the person, `text-system` (indigo) when it names something built (see `Hero.tsx`,
+  `MethodStory.tsx`, `Onboarder.tsx`, and the `accent()` helper for case study h1s).
+  Never both accents in one heading.
 - Every case study ends on a concrete, falsifiable outcome (a number, a grade, a
   named result), never a vague "successfully delivered" close.
-- **Bold key phrases in accent color** (`<strong className="text-accent
-  font-semibold">`) where a sentence hits a genuinely load-bearing idea, one or two
-  per paragraph at most. Overuse defeats the point; if every phrase is emphasized,
-  none of them are.
+- **Bold key phrases in the primary text colour** (`<strong className="font-semibold
+  text-text">` inside a `text-muted` paragraph; `text-on-ink` on dark tiles) where a
+  sentence hits a genuinely load-bearing idea, one or two per paragraph at most. This
+  is how Apple's product pages emphasise; the accent colour is not used for body
+  emphasis. Overuse defeats the point; if every phrase is emphasized, none of them are.
 - Confidence without hype: state what was built and what changed; don't editorialize
   about how impressive it is.
 - Energetic, warm, "burst-pause-burst" personality — portfolio should read like a
@@ -59,152 +71,195 @@ Copy rules for anything written in his voice (hero, about, case studies):
 
 ## 3. Visual system (treat as law, not preference)
 
-These are the actual tokens in `app/globals.css` — don't invent new colors, fonts, or
+**Redesign (2026-10-29).** The site was rebuilt against the apple-design skill
+(github.com/dickwu/apple-design-skill). The previous system (cream `#FAF7F2`, Fraunces
+serif, copper `#C17A3A`, grain overlay, contour canvas) is exactly the look that skill
+names as the most common template for generated interfaces, which is why it read as
+"made by an AI tool". The new system is Apple-neutral: grey page, white tiles, system
+type, two accents with strict meanings (below), and dark product tiles for each project.
+The GitHub history has the old version.
+
+**Two accents, two meanings (decided with Michael, 2026-10-29).** The palette encodes
+the positioning: he starts with the person and builds AI-native systems.
+- **Orange = the human side.** The person, the problem, the structure of the problem,
+  the outcome for people, personal moments, and the brand voice (section eyebrows,
+  Hero "the person", the status dot, About tiles, Contact heading, Solarios' sun).
+- **Indigo = the system side.** What was built, AI, and anything you interact with:
+  links and chevron links, focus ring, text selection, case study h1 product names,
+  Onboarder's name and flow, the Latitude59 pipeline, the Second Brain demo, "The
+  system" and "The edges" beat labels.
+- The method beats walk the colours: person and structure orange, system and edges
+  indigo, outcome back to orange. The home story does the same (inbox and loop orange,
+  pipeline indigo, 80 dots orange). It starts and ends with the person.
+- Rules: never blend them in a gradient (orange to purple is the generic "AI startup"
+  look); never give them equal weight on one screen (orange is the brand, roughly 70%;
+  indigo is the counterpoint); never both in one heading; when adding anything, ask
+  "is this human or system?" and pick one.
+
+These are the actual tokens in `app/globals.css`. Don't invent new colors, fonts, or
 radii. If a value needs to change, change it here and in `globals.css` together.
 
-**Palette**
-| Token | Value | Use |
-|---|---|---|
-| `--bg` | `#FAF7F2` | page background |
-| `--surface` | `#F0EBE3` | cards, badges |
-| `--surface2` | `#E8E0D5` | nested surfaces (tags on cards) |
-| `--text` | `#1A1A18` | primary text |
-| `--text-muted` | `#6B6560` | body copy |
-| `--text-faint` | `#A09890` | meta labels, footer links |
-| `--accent` | `#C17A3A` | links, italic emphasis, CTAs |
-| `--accent-light` | `#E8A96A` | accent on dark surfaces |
-| `--accent-dark` | `#2C2C27` | Contact section background, primary CTA fill |
-| `--border` | `#DDD5C8` | hairlines, card borders |
+**Palette** (contrast is WCAG against `--bg` unless noted)
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| `--bg` | `#F5F5F7` | `#000000` | page background |
+| `--surface` | `#FFFFFF` | `#161617` | tiles and cards |
+| `--surface2` | `#F5F5F7` | `#2C2C2E` | nested fills (chips inside tiles) |
+| `--text` | `#1D1D1F` (15.5:1) | `#F5F5F7` | primary text, filled CTA |
+| `--text-muted` | `#6E6E73` (4.7:1) | `#A1A1A6` | body copy, small labels |
+| `--text-faint` | `#86868B` (3.3:1) | `#86868B` | grey lead-in words in large headings **only** (24px+) |
+| `--accent` | `#E35500` (3.5:1) | `#FF8A3D` | human accent: large text, icons, fills |
+| `--accent-ink` | `#B64400` (5.1:1) | `#FF9F5A` | human accent for small text: eyebrows, beat labels |
+| `--system` | `#5856D6` (5.2:1, 5.7:1 on white) | `#8E8CFF` (6.3:1 on `--surface`) | system accent: links, focus ring, selection, built things; safe at any size |
+| `--system-on-ink` | `#9D9BFF` (6.9:1+ on every dark tile) | same | system accent on dark tiles: links, demo highlights, focus ring |
+| `--border` | `#D2D2D7` | `#3A3A3C` | hairlines and dividers |
+| `--ink` | `#1D1D1F` | `#1C1C1E` | Contact tile background |
+| `--on-ink` / `--on-ink-muted` / `--accent-on-ink` | `#F5F5F7` / `#A1A1A6` / `#FF8A3D` | same | text on any dark tile |
 
-Palette was chosen deliberately against a prior dark portfolio that read as "vibe-coded
-and cold" — the fix wasn't just going light, it was going warm. Five words that define
-correct: **warm, energetic, easy on the eye, earthy, relaxing.** Michael's own projects
-(Latitude59, Solarios, etc.) are allowed — expected — to have their own darker product
-identities; the contrast between the light portfolio shell and dark project products
-inside it is intentional, not an inconsistency to fix.
+Project tiles keep a fixed dark identity in both schemes (`projectTheme` in
+`ProjectArt.tsx`): Latitude59 `#0E1A2B`, Second Brain `#15121D`, Solarios
+`#1C1409`. The light shell with dark product tiles inside it is intentional.
 
 **Type**
-- Display: `Fraunces` (serif) — all headings, section labels' numerals, italic accents.
-- Body: `DM Sans` — everything else.
-- Both loaded via Google Fonts `@import` in `globals.css` (not `next/font`) — this
-  `@import` must stay the very first rule in the file, before `@import "tailwindcss"`;
-  reordering it breaks the build (Tailwind v4 requirement, already hit once).
-- Headline scale uses `clamp()` for fluid sizing (e.g. `clamp(40px, 6vw, 80px)` for
-  H1) — keep using `clamp()`, not fixed breakpoints, for type.
+- One family. `-apple-system` first, so Apple devices get SF Pro; everyone else gets
+  Inter (with the `opsz` axis) via `next/font/google` in `layout.tsx`. Don't use a
+  Google Fonts `@import` in CSS: the build silently drops it (found 2026-10-29, which
+  means the old Fraunces/DM Sans import never shipped either).
+- Hierarchy comes from size, weight (600 for headings), tight negative tracking
+  (`-0.03em` to `-0.04em` on display sizes), and grey/black colour contrast. No
+  italics, no serif.
+- Headline scale uses `clamp()` for fluid sizing; keep using it for type.
+- Body copy 17px minimum on the home page, 19px in case studies. Never below 13px.
 
-**Recurring motifs** (already established, keep consistent):
-- Uppercase, letter-spaced (`0.12em`), 11px, accent-colored "eyebrow" label above every
-  section (`What I do`, `Selected work`, `About`, `Let's talk`).
-- Pill shape (`border-radius: 999px`) for every button and badge.
-- Card: `16px` radius, `1px solid var(--border)`, hover lifts `-6px` with a soft shadow
-  and border turns accent-colored.
-- Grain texture overlay (`body::before`) and `::selection` accent color — global
-  atmosphere, don't remove.
-- Fade-up entrance animation on hero elements (`.animate-fade-up` + `.delay-N`) — apply
-  the same pattern to new above-the-fold content, don't introduce a different easing.
+**Recurring motifs** (keep consistent):
+- `<SectionLabel>`: sentence-case, 15px semibold, `text-accent-ink` eyebrow above each
+  section heading. No uppercase tracking.
+- Pill shape for every button and badge. Buttons keep a 44px minimum height.
+- Tiles: `rounded-tile` (28px), `bg-surface` on the grey page, no border. Nested
+  surfaces use `rounded-card` (20px).
+- Project tiles use `.tile-lift` (lift on hover and `:focus-within`, art scales slightly).
+- Apple-style text links: `<ChevronLink>` ("Get in touch ›").
+- Frosted-glass nav (`.glass`) is the only translucent surface. Glass belongs to the
+  floating functional layer, never to content. It falls back to an opaque background
+  under `prefers-reduced-transparency` and `prefers-contrast: more`.
+- No grain, no background canvas, no decorative texture. The signature element is the
+  **latitude tile** in `AtAGlance.tsx`, rendered inside About (Nairobi 1°S, Tallinn 59°N, the parallel the
+  Latitude59 conference is named after). Boldness is spent there; keep everything
+  around it quiet.
+- Project art (`ProjectArt.tsx`): abstract SVGs built only from each case study's
+  public copy. Same rule as the Latitude59 decision in §8.
 
-**Dark mode:** not implemented. If added, do it by swapping the `:root` CSS variable
-values under a `prefers-color-scheme: dark` block — the whole site already reads
-colors through variables, so this should not require touching component code.
+**Brand mark (chosen by Michael, 2026-10-29).** A monoline K (indigo, the system)
+whose upper arm reaches into an overlapping orange node (the person): the two-accent
+story in one letter. Explored through two rounds of Gemini concepts and a 16px squint
+test; the floating node, the K° ring, the M ("Mi" reads as Xiaomi) and the tile-only
+favicon were rejected.
+- Geometry lives once in `app/components/brandMark.ts` (64-unit grid). `Logo.tsx`
+  draws it with theme tokens (nav, 26px, the only place the logo appears on the
+  page; HIG `branding.md` warns against repeating it).
+- Favicon: `app/icon.svg`, a transparent mark with a `prefers-color-scheme` block that
+  swaps to `#8E8CFF` on dark tabs; `app/favicon.ico` (16/32/48 PNG-in-ICO) for Safari
+  and older browsers. Both are static copies of the geometry: regenerate them if
+  `brandMark.ts` changes.
+- iPhone home-screen icon: `app/apple-icon.tsx` generates a 180px full-bleed indigo
+  square with a white K and the orange node. No corner radius: iOS applies it (HIG
+  `app-icons.md`, "Icon shape").
+- Never redraw the K in another font, add a wordmark inside the icon, or blend the
+  node into the K with a gradient.
 
-**Motion system (locked, 2026-07-23):** two shared client components in
-`app/components/`, used everywhere instead of one-off animation code:
-- `Reveal.tsx` (`<Reveal items={...} />`): word-by-word or line-by-line typographic
-  reveal, reserved for **headlines and standalone key lines only** (Hero H1, section
-  H2s, case study H1s, the Capabilities lead line), never full body paragraphs, that
-  would be exhausting on repeat visits. `items` is an array of words/nodes with `'\n'`
-  entries for manual line breaks; pass `toWords('some string')` to split plain text.
-  `triggerOnMount` (with `mountDelay`) is for above-the-fold content like the Hero;
-  everything else defaults to firing once via `IntersectionObserver` on scroll into
-  view.
-- `FadeIn.tsx` (`<FadeIn>...</FadeIn>`): whole-block fade-up on scroll into view, used
-  for section paragraphs, capability/project cards, meta grids, and stat tiles. Accepts
-  `delay` (ms) for staggering a list of siblings (`delay={i * 90}`).
-- Both respect `prefers-reduced-motion` via the global CSS guard in `globals.css`
-  (forces near-zero transition/animation duration); don't add animation code that
-  bypasses this.
-- Don't add a third animation mechanism. If a new pattern seems needed, extend one of
-  these two rather than hand-rolling `useState`/`IntersectionObserver` again.
+**Dark mode:** implemented by swapping `:root` values, in two identical blocks: under
+`prefers-color-scheme: dark` (unless `data-theme="light"`), and under
+`:root[data-theme="dark"]`. Keep them in sync. `AppearanceSwitcher.tsx` in the footer
+offers Light / Dark / Auto, the way developer.apple.com does; Auto is the default and
+follows the system (HIG `dark-mode.md` warns against app-only appearance settings, so
+the system stays in charge unless the visitor overrides it). The choice is stored in
+`localStorage` under `appearance` and applied before paint by the inline script in
+`layout.tsx`.
 
-**Background texture (locked, 2026-07-23):** three directions were mocked up and
-compared (contour lines, scattered marks, woven chevron band); the combination
-actually shipped is contour lines site-wide plus the woven band as a single accent,
-not the scattered-marks option:
-- `BackgroundContours.tsx`: a `position: fixed`, `z-index: -1`, `pointer-events: none`
-  canvas mounted once in `layout.tsx`, drawing faint (≤8% opacity) topographic-style
-  wavy lines in the accent color, regenerated on resize, with a slow CSS-only drift
-  (`.bg-contours` in `globals.css`, respects the reduced-motion guard already in
-  place). This is the constant site-wide atmosphere; don't add a second full-page
-  texture on top of it.
-- `WovenBand.tsx`: a thin abstracted chevron-pattern canvas (also accent-colored, low
-  opacity), used **once**, above the Contact card. This is a single accent moment, not
-  a repeatable pattern; don't scatter it across other sections without deciding that
-  deliberately first.
-- Both read the `--accent` CSS variable at draw time rather than hardcoding a color, so
-  they'd automatically pick up a future dark-mode palette.
-- The scattered-marks direction (sparse hand-drawn circles/plus-signs, notebook-margin
-  style) was considered and intentionally not shipped, it read as the most
-  "personality forward" of the three and risked feeling busy against the "warm, easy
-  on the eye, relaxing" brief. Worth revisiting only if the site later wants to lean
-  more handmade; don't add it as a default.
+**Motion system:** two shared client components in `app/components/`, used everywhere
+instead of one-off animation code. Both use the `--ease-apple` curve
+(`cubic-bezier(0.28, 0.11, 0.32, 1)`).
+- `Reveal.tsx` (`<Reveal items={...} />`): word-by-word typographic reveal, reserved
+  for **headlines only** (Hero H1, section H2s, case study H1s). `items` is an array of
+  words/nodes with `'\n'` entries for manual line breaks; pass `toWords('some string')`
+  to split plain text. Keep a multi-word accent phrase as one node with
+  `whitespace-nowrap` so it never splits across lines. `triggerOnMount` is for
+  above-the-fold content; everything else fires once on scroll into view.
+- `FadeIn.tsx` (`<FadeIn>...</FadeIn>`): whole-block fade-up on scroll into view for
+  paragraphs, tiles, meta grids, and stat tiles. Accepts `delay` (ms) for staggering.
+- `.animate-fade-up` + `.delay-N` for above-the-fold blocks that aren't headlines.
+- All of it respects `prefers-reduced-motion` via the global guard in `globals.css`.
+- Don't add a third animation mechanism.
+
+**Home page order (visual storytelling, 2026-10-29).** One story top to bottom, each
+section answering the question the previous one raises:
+1. `Hero`: who, plus what's live now (status pill).
+2. `MethodStory` (`#work`): *how* he works, shown not claimed. The Latitude59 story in
+   the method's beats (person, structure, system, outcome). Replaced the old
+   Capabilities cards, whose claims the story now proves.
+3. `Onboarder`: what that first version became ("Every conference has this problem.
+   So we built Onboarder."), using only public facts from onboarder.work.
+4. `Work` (`#more-work`): the same method in other domains (Second Brain, Solarios).
+5. `About`: the person, with the latitude / Vula / education tiles.
+6. `Contact`: three doors, one per persona (problem, builder, connector).
+
+**Interactive elements (exactly three; don't add more without deciding it).**
+- `MethodStory`: scroll-told story. On `md+` a sticky visual (`StoryVisuals.tsx`)
+  crossfades as each step crosses the middle of the viewport; inactive step text dims.
+  Below `md` each step carries its own static visual, so nothing depends on scroll.
+- `VectorDemo.tsx` (Second Brain): a segmented control (native radios, short noun
+  labels, `segmented-controls.md`) picks a question; the three nearest notes light up as
+  citations. Note titles are illustrative and labelled as such.
+- `EnergyDemo.tsx` (Solarios): a time-of-day slider (native `range`, min on the leading
+  side, exact time shown beside it and in `aria-valuetext`, `sliders.md`) drives the
+  recommendation text. Captioned "Illustration of a typical day, not real data."
+Demos are always labelled as illustrations, built from the case study's own copy, and
+use native inputs so keyboard and screen readers work for free. They appear on the
+home tiles and as the case study header art.
 
 ## 4. Component conventions
 
-Tailwind v4 is installed and configured (`@theme` in `globals.css` maps every color
-variable to a Tailwind token — there is no `tailwind.config.ts`, v4 doesn't use one).
-**No component currently uses Tailwind classes** — everything is inline `style={}`
-objects. This wasn't an oversight: the original build generated Tailwind-class code
-first, then the shipped version diverged to inline styles during implementation. It's
-now the single biggest lever for improving maintainability and is what's actively
-causing the responsiveness gaps in §5.
+Tailwind v4 (`@theme` in `globals.css` maps every variable to a utility: `bg-surface`,
+`text-muted`, `text-accent-ink`, `bg-ink`, `text-on-ink`, `rounded-tile`,
+`ease-apple`, etc. There is no `tailwind.config.ts`). **Every component uses Tailwind
+classes bound to these tokens, not inline `style={}`.** The only inline styles left are
+the computed per-word transitions in `Reveal`/`FadeIn` and the per-bar opacity in
+`PipelineDiagram`. Don't introduce a second styling system.
 
-**Rule for any new or edited component: use Tailwind utility classes bound to the
-existing theme tokens (`bg-surface`, `text-muted`, `border-border`, `text-accent`,
-etc.), not inline `style={}`.** Don't introduce a second styling system (CSS modules,
-styled-components) — Tailwind is already wired to the right tokens, it's just unused.
+Shared primitives live in `app/components/ui.tsx`: `SectionLabel`, `Button`
+(`filled | outline | light | outline-light`), `ChevronLink`, `Badge`, `Card`. Case
+study building blocks live in `app/work/CaseStudy.tsx`: `CaseHeader`, `MetaGrid`,
+`CaseBody`, `CaseSection`, `StatStrip`, `LiveLink`, `NextProject`, plus the
+`strong()` and `accent()` helpers. Use them instead of hand-rolling.
 
-Extract these shared primitives the first time you touch a file that needs them
-(don't do a speculative refactor of everything at once):
-- `<SectionLabel>` — the uppercase eyebrow span, repeated verbatim in `Capabilities`,
-  `Work`, `About`, `Contact`.
-- `<Pill>` / `<Button variant="filled" | "outline">` — the CTA pill button, currently
-  hand-rolled with slightly different props in `Hero`, `Nav`, `Contact`, and both case
-  study pages.
-- `<Badge>` — the small rounded tag used for project tags and meta values.
-- `<Card>` — the bordered/hover-lift container used by `Work` and `Capabilities`.
+`Nav` and `Footer` are mounted once in `layout.tsx`, so they appear on every route.
+Nav links use `/#section` so they work from case study pages.
 
-Client components that use event handlers (`onMouseEnter`, `onClick`, etc.) need
-`'use client';` as the literal first line of the file, or Next.js throws a
-server/client boundary error — already correctly done in `Nav.tsx`, `Capabilities.tsx`,
-`Work.tsx`; keep doing it for any new interactive component.
+Client components that use state or event handlers need `'use client';` as the first
+line (`Nav`, `Reveal`, `FadeIn`, `MethodStory`, `VectorDemo`, `EnergyDemo`,
+`AppearanceSwitcher`). Everything else stays a server component.
 
-## 5. Responsive requirements (currently broken — fix when touching these files)
+Icons: `lucide-react` only, `strokeWidth` 1.75 at 28 to 32px, `aria-hidden` when
+decorative. No numbered 01/02/03 markers on content that isn't a real sequence.
 
-Because everything is inline styles with no media queries, several layouts only work
-above ~1000px wide:
-- `About.tsx` — `gridTemplateColumns: '1fr 1fr'` has no mobile fallback; text and
-  photos will squeeze into unreadable columns on phone widths. Needs to stack to a
-  single column below `768px`.
-- Case study meta grids (`latitude59`, `second-brain`, `solarios` pages) —
-  `repeat(4, 1fr)` / `repeat(3, 1fr)` need to collapse to 2 columns (tablet) and 1
-  column (mobile).
-- `Nav.tsx` — link row + CTA button has no mobile treatment; needs a collapsed/hamburger
-  state below `640px` (this is what `lucide-react` is likely for — it's installed but
-  unused; use it for the menu icon rather than adding a new icon dependency).
+## 5. Responsive requirements
 
-When converting a section to Tailwind (§4), build the responsive variant in the same
-pass using `sm:`/`md:`/`lg:` prefixes rather than leaving it inline-and-fixed.
+Fixed in the 2026-10-29 redesign: About stacks below `md`, case study meta grids go
+1, then 2, then 3 or 4 columns, and the nav collapses to a hamburger (lucide
+`Menu`/`X`) below `sm` with `aria-expanded` and Escape to close. Every new layout is
+built mobile-first with `sm:`/`md:`/`lg:` prefixes and checked at 390px wide.
 
 ## 6. Accessibility baseline
 
-- Every hover-only interaction needs a keyboard-reachable equivalent. `Capabilities.tsx`
-  currently sets border color via `onMouseEnter`/`onMouseLeave` inline handlers — this
-  should be a CSS `:hover` (and `:focus-visible`) rule instead, matching how
-  `.project-card:hover` is already done in `globals.css`.
-- Add visible `:focus-visible` states for all links and buttons (none currently defined
-  anywhere) — use the accent color, consistent with `::selection`.
+- Hover states always have a keyboard equivalent (`:focus-within` on tiles).
+- Global `:focus-visible` ring in `--system` (indigo), switching to `--system-on-ink`
+  inside any `.text-on-ink` dark tile; don't remove it.
+- Text colour pairs must meet the contrast figures in the palette table; `text-faint`
+  and `text-accent` are for large text only.
+- The Hero H1 renders a `sr-only` sentence and hides the animated word spans from
+  screen readers; keep that pattern for any heading that mixes images into text.
 - Keep heading hierarchy real (one `h1` per page, `h2` per section, `h3` per
-  card/project) — this already mostly holds, preserve it when refactoring.
+  card/project). Sections without a visible heading get an `sr-only` `h2`.
 
 ## 7. Case study template (for every project under `app/work/[slug]`)
 
@@ -212,32 +267,35 @@ Every case study is a single-file page and follows this exact section order — 
 ones consistent so the site reads as one system:
 1. Back link to `/#work`.
 2. Eyebrow label (category · location/context · year).
-3. `h1` title with italic accent word.
+3. `h1` title with one accent word or phrase in `text-accent` (via `accent()`).
 4. One-sentence subline stating the tension/hook.
 5. Meta grid (Role, Team/Stack, Timeline/Status, key number) — 3 or 4 items.
-6. Body sections, always in this order: **The problem** → **What was built** →
-   **The process** (optional if solo) → **The outcome**. Each ends with a full-width
-   `1px` divider.
+6. Body sections told in the **method beats** (approved by Michael 2026-10-29), in
+   this order, each labelled "N · Beat" above a project-specific `h2`:
+   **The person** (who was stuck, one concrete human) → **The structure** (why it
+   kept happening) → **The system** (what was built; may span two sections, e.g.
+   "What we built" + "How we worked") → **The edges** (the cases other builders miss)
+   → **The outcome** (falsifiable result). Pass `beat` to `CaseSection`; the labels
+   come from `BEATS` in `CaseStudy.tsx`. Each section ends with a full-width `1px`
+   divider.
 7. Stats strip (2–3 large numbers) — optional, used when the project has countable
    outcomes (Latitude59 has one, Second Brain/Solarios don't; don't force it).
 8. Live link CTA, if the project is deployed.
 9. "Next project" link at the bottom, forming a chain across all case studies (last
    one links back to `/#work` instead of forward).
 
-**Implementation pattern (locked, 2026-07-23):** the `h1` uses `Reveal`; the meta grid,
-each body section, and the stats strip are each wrapped in `FadeIn`. Body paragraphs are
-authored as `<Fragment>` nodes (not plain strings) so key phrases can be wrapped in
-`<strong className="text-accent font-semibold">`, one or two per paragraph, following
-the emphasis rule in §2. See `app/work/latitude59/page.tsx` as the reference
-implementation.
+**Implementation pattern:** pages compose the parts in `app/work/CaseStudy.tsx`.
+`CaseHeader` renders the back link, eyebrow, `Reveal` h1, subline, and the project's
+dark art tile; `MetaGrid`, `CaseSection`, and `StatStrip` wrap themselves in
+`FadeIn`. Body paragraphs are authored as `<Fragment>` nodes so key phrases can use
+the `strong()` helper, one or two per paragraph (§2). See
+`app/work/latitude59/page.tsx` as the reference implementation.
 
-**Missing today, required for any new/edited case study page:** a per-route
-`export const metadata: Metadata` (title + description, ideally `openGraph.images`)
-so shared links render properly — currently only `app/layout.tsx` sets metadata, and
-it's the same for every route.
+Every case study page exports `metadata` (title, description, `openGraph`). The
+root layout sets the `%s · Michael Kihuyu` title template and the default OG image.
 
-New project checklist before adding an entry to `Work.tsx`'s `projects` array and
-creating its route:
+New project checklist before adding an entry to `Work.tsx`'s `projects` array (the
+"More work" tiles; Latitude59 lives in `MethodStory` instead) and creating its route:
 - [ ] One-sentence `summary` framed as a tension (mirror the existing three).
 - [ ] 2–3 `tags` describing technique/domain, not just tech names.
 - [ ] `liveUrl` if deployed, else `null` (case study still required).
@@ -255,8 +313,13 @@ creating its route:
   built entirely from the page's own public copy (the speaker/organiser feedback loop,
   the 9-phase pipeline, the named services), no real UI chrome or client data. This is
   the model to follow if any other case study ever needs the same treatment.
-- Per-route metadata for case study pages (see §7) is still missing.
-- Responsive layout fixes (§5) are still outstanding.
+- Per-route metadata and the responsive fixes were done in the 2026-10-29 redesign.
+- Copy written on 2026-10-29 that still needs Michael's sign-off: the Vula tile, the
+  MethodStory step text, the Onboarder section, the "Same method. Different domains."
+  heading, the contact doors, the demo questions/note titles, and the new sentences in
+  the case studies (Latitude59 "The edges" section and the Onboarder line in "What
+  changed"; Second Brain's first "The edges" sentence). Everything else in the case
+  studies is his original copy, re-sorted into the beats.
 - Custom domain not yet configured — site is still on the default `michael-kihuyu.vercel.app`.
   This is a Vercel/DNS task, not a repo change.
 - LinkedIn profile doesn't yet link to the portfolio — outside repo scope, just a
@@ -264,10 +327,9 @@ creating its route:
 
 ## 9. What NOT to change without asking
 
-- The positioning statement (§1) and the color palette, font pairing, and grain/animation
-  atmosphere (§3) — these are the brand, not incidental styling.
-- The case-study narrative structure (§7) — consistency across projects is the point.
-- `AGENTS.md`'s instructions are separate from this doc and may reference paths/behavior
-  that don't hold up (e.g. a `node_modules/next/dist/docs/` guide that doesn't exist in
-  this environment) — don't treat unverifiable claims there as fact; verify against the
-  actual installed `next` version before relying on API specifics.
+- The positioning statement (§1) and the visual system in §3 (palette, single type
+  family, accent budget, signature latitude tile). These are the brand now.
+- The case-study narrative structure (§7). Consistency across projects is the point.
+- `AGENTS.md` says to read `node_modules/next/dist/docs/` before writing Next code.
+  Those docs do exist once `npm install` has run (Next 16.2.7); check them for API
+  specifics, e.g. `next/image` uses `preload` (not the deprecated `priority`).

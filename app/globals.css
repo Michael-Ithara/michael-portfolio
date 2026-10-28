@@ -1,34 +1,95 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap');
 @import "tailwindcss";
 
-
 @theme {
-  --color-bg:           var(--bg);
-  --color-surface:      var(--surface);
-  --color-surface2:     var(--surface2);
-  --color-text:         var(--text);
-  --color-muted:        var(--text-muted);
-  --color-faint:        var(--text-faint);
-  --color-accent:       var(--accent);
-  --color-accent-light: var(--accent-light);
-  --color-accent-dark:  var(--accent-dark);
-  --color-border:       var(--border);
+  --color-bg:             var(--bg);
+  --color-surface:        var(--surface);
+  --color-surface2:       var(--surface2);
+  --color-text:           var(--text);
+  --color-muted:          var(--text-muted);
+  --color-faint:          var(--text-faint);
+  --color-accent:         var(--accent);
+  --color-accent-ink:     var(--accent-ink);
+  --color-border:         var(--border);
+  --color-ink:            var(--ink);
+  --color-on-ink:         var(--on-ink);
+  --color-on-ink-muted:   var(--on-ink-muted);
+  --color-accent-on-ink:  var(--accent-on-ink);
+  --color-system:         var(--system);
+  --color-system-on-ink:  var(--system-on-ink);
 
-  --font-display: "Fraunces", serif;
-  --font-sans:    "DM Sans", sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, var(--font-inter), "Inter", "Segoe UI", system-ui, sans-serif;
+
+  --radius-tile: 28px;
+  --radius-card: 20px;
+
+  --ease-apple: cubic-bezier(0.28, 0.11, 0.32, 1);
 }
 
+/*
+ * Two accents, two meanings (see CLAUDE.md §3):
+ *   orange (--accent*)  = the human side: the person, the problem, the brand voice.
+ *   indigo (--system*)  = the system side: what was built, AI, anything you interact with.
+ * Never blend them in a gradient; never give them equal weight on one screen.
+ *
+ * Contrast figures are WCAG ratios against --bg (#F5F5F7) unless noted.
+ * --text-faint and --accent are for large text (24px+) and fills only.
+ */
 :root {
-  --bg:           #FAF7F2;
-  --surface:      #F0EBE3;
-  --surface2:     #E8E0D5;
-  --text:         #1A1A18;
-  --text-muted:   #6B6560;
-  --text-faint:   #A09890;
-  --accent:       #C17A3A;
-  --accent-light: #E8A96A;
-  --accent-dark:  #2C2C27;
-  --border:       #DDD5C8;
+  --bg:            #F5F5F7;
+  --surface:       #FFFFFF;
+  --surface2:      #F5F5F7;
+  --text:          #1D1D1F; /* 15.5:1 */
+  --text-muted:    #6E6E73; /* 4.7:1, 5.1:1 on white */
+  --text-faint:    #86868B; /* 3.3:1, large text only */
+  --accent:        #E35500; /* 3.5:1, large text and fills */
+  --accent-ink:    #B64400; /* 5.1:1, small accent text */
+  --border:        #D2D2D7;
+  --ink:           #1D1D1F;
+  --on-ink:        #F5F5F7;
+  --on-ink-muted:  #A1A1A6; /* 6.5:1 on --ink */
+  --accent-on-ink: #FF8A3D; /* 7.2:1 on --ink */
+  --system:        #5856D6; /* 5.2:1, 5.7:1 on white: safe for small text */
+  --system-on-ink: #9D9BFF; /* 6.9:1 or better on every dark tile */
+  --glass:         rgba(245, 245, 247, 0.72);
+  color-scheme: light;
+}
+
+/*
+ * Dark palette. Applies when the system is dark and the visitor hasn't picked
+ * Light, or when they picked Dark (data-theme is set by the footer switcher and
+ * the inline script in layout.tsx). Keep the two blocks identical.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:            #000000;
+    --surface:       #161617;
+    --surface2:      #2C2C2E;
+    --text:          #F5F5F7;
+    --text-muted:    #A1A1A6;
+    --text-faint:    #86868B;
+    --accent:        #FF8A3D;
+    --accent-ink:    #FF9F5A;
+    --system:        #8E8CFF;
+    --border:        #3A3A3C;
+    --ink:           #1C1C1E;
+    --glass:         rgba(22, 22, 23, 0.72);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:            #000000;
+  --surface:       #161617;
+  --surface2:      #2C2C2E;
+  --text:          #F5F5F7;
+  --text-muted:    #A1A1A6;
+  --text-faint:    #86868B;
+  --accent:        #FF8A3D;
+  --accent-ink:    #FF9F5A;
+  --system:        #8E8CFF;
+  --border:        #3A3A3C;
+  --ink:           #1C1C1E;
+  --glass:         rgba(22, 22, 23, 0.72);
+  color-scheme: dark;
 }
 
 * {
@@ -37,40 +98,53 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 64px;
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-sans);
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Font utility */
-.font-display {
-  font-family: 'Fraunces', serif;
-}
-
-/* Grain texture */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.35;
-}
-
-/* Text selection */
 ::selection {
-  background: var(--accent);
-  color: var(--bg);
+  background: var(--system);
+  color: #FFFFFF;
 }
 
-/* Animations */
+/* Keyboard focus, everywhere */
+:focus-visible {
+  outline: 2px solid var(--system);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Dark tiles (projects, contact) use the lighter indigo so the ring stays visible. */
+.text-on-ink :focus-visible {
+  outline-color: var(--system-on-ink);
+}
+
+/* Floating functional layer only (nav). Never use on content. */
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .glass {
+    background: var(--bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* Above-the-fold entrance */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -80,71 +154,73 @@ body::before {
 }
 
 .animate-fade-up {
-  animation: fadeUp 0.7s ease forwards;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.7s ease forwards;
+  animation: fadeUp 0.9s var(--ease-apple) forwards;
 }
 
 .delay-1 { animation-delay: 0.1s; opacity: 0; }
 .delay-2 { animation-delay: 0.2s; opacity: 0; }
-.delay-3 { animation-delay: 0.3s; opacity: 0; }
-.delay-4 { animation-delay: 0.45s; opacity: 0; }
-.delay-5 { animation-delay: 0.6s; opacity: 0; }
+.delay-3 { animation-delay: 0.35s; opacity: 0; }
+.delay-4 { animation-delay: 0.5s; opacity: 0; }
+.delay-5 { animation-delay: 0.65s; opacity: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+  html {
+    scroll-behavior: auto;
+  }
 }
 
-/* Site-wide contour backdrop: slow ambient drift, pure transform (cheap) */
-@keyframes contourDrift {
-  from { transform: translate(0, 0); }
-  to   { transform: translate(-2%, 1.5%); }
-}
-.bg-contours {
-  animation: contourDrift 46s ease-in-out infinite alternate;
-}
-
-/* Hover underline for links */
-.accent-link {
-  position: relative;
-  text-decoration: none;
-  color: var(--text);
-}
-.accent-link::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1.5px;
-  background: var(--accent);
-  transition: width 0.3s ease;
-}
-.accent-link:hover::after {
+/* Slider on dark project tiles (Solarios demo). 44px tall hit area, 28px thumb. */
+.range-on-ink {
+  -webkit-appearance: none;
+  appearance: none;
   width: 100%;
+  height: 44px;
+  background: transparent;
+  cursor: pointer;
+}
+.range-on-ink::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.range-on-ink::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.range-on-ink::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  margin-top: -12px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.range-on-ink::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.range-on-ink:focus-visible {
+  outline-offset: 0;
 }
 
-/* Project cards */
-.project-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+/* Marching dashes along the Latitude59 feedback loop */
+@keyframes flow {
+  to { stroke-dashoffset: -20; }
 }
-.project-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 24px 64px rgba(26,26,24,0.12);
-  border-color: var(--accent);
+.flow {
+  stroke-dasharray: 4 6;
+  animation: flow 1.2s linear infinite;
 }
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+@media (prefers-reduced-motion: reduce) {
+  .flow { animation: none; }
+}
