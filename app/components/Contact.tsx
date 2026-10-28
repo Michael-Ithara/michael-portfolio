@@ -1,134 +1,90 @@
+import { ArrowUpRight, ChevronRight } from 'lucide-react';
 import Reveal from './Reveal';
 import { toWords } from './words';
-import WovenBand from './WovenBand';
+import { SectionLabel } from './ui';
 
 const headingWords = [
   ...toWords("I'm not hard"),
   '\n',
   ...toWords('to reach.').map((w, i) => (
-    <span key={`contact-accent-${i}`} style={{ fontStyle: 'italic', color: 'var(--accent-light)' }}>
+    <span key={`contact-accent-${i}`} className="text-accent-on-ink">
       {w}
     </span>
   )),
 ];
 
+/* One door per persona: Founder with a Problem, Peer Builder, International Connector. */
+const DOORS = [
+  {
+    question: 'Have a problem worth solving?',
+    action: 'Tell me about it',
+    href: 'mailto:mkihuyu020@gmail.com?subject=A%20problem%20worth%20solving',
+  },
+  {
+    question: 'Building something too?',
+    action: 'Compare notes',
+    href: 'mailto:mkihuyu020@gmail.com?subject=Building%20something',
+  },
+  {
+    question: 'Just want to connect?',
+    action: 'Find me on LinkedIn',
+    href: 'https://www.linkedin.com/in/michael-kihuyu-977a0b266/',
+  },
+];
+
 export default function Contact() {
   return (
-    <section
-      id="contact"
-      style={{
-        padding: '0 24px 120px',
-        maxWidth: '1100px',
-        margin: '0 auto',
-      }}
-    >
-      <WovenBand />
-      <div
-        style={{
-          borderRadius: '24px',
-          background: 'var(--accent-dark)',
-          padding: '80px 64px',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Background glow */}
+    <section id="contact" className="mx-auto max-w-[1120px] px-4 pb-24 sm:px-6 md:pb-32">
+      <div className="relative overflow-hidden rounded-tile bg-ink px-6 py-16 text-on-ink sm:px-12 md:px-16 md:py-24">
         <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            width: '400px',
-            height: '400px',
-            background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)',
-            opacity: 0.08,
-            pointerEvents: 'none',
-          }}
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-32 -top-40 size-[520px] rounded-full bg-[radial-gradient(circle,rgba(255,138,61,0.22)_0%,transparent_65%)]"
         />
 
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: '560px' }}>
-          <span
-            style={{
-              fontSize: '11px',
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              color: 'var(--accent-light)',
-              fontWeight: 500,
-              display: 'block',
-              marginBottom: '24px',
-            }}
-          >
-            Let&apos;s talk
-          </span>
-
-          <h2
-            style={{
-              fontFamily: 'Fraunces, serif',
-              fontSize: 'clamp(32px, 4vw, 52px)',
-              fontWeight: 600,
-              color: 'var(--bg)',
-              lineHeight: 1.1,
-              marginBottom: '24px',
-            }}
-          >
-            <Reveal items={headingWords} stagger={45} />
-          </h2>
-
-          <p
-            style={{
-              fontSize: '16px',
-              color: 'rgba(250, 247, 242, 0.65)',
-              lineHeight: 1.7,
-              marginBottom: '40px',
-              maxWidth: '420px',
-            }}
-          >
-            If you have an interesting problem, a project you&apos;re
-            building, or you just want to connect,{' '}
-            <strong className="text-accent-light font-semibold">
-              my inbox is open
-            </strong>
-            .
-          </p>
-
-          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-            <a
-              href="mailto:mkihuyu020@gmail.com"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '12px 28px',
-                borderRadius: '999px',
-                background: 'var(--accent)',
-                color: 'white',
-                fontSize: '14px',
-                fontWeight: 500,
-                textDecoration: 'none',
-              }}
-            >
-              Send an email →
-            </a>
-            <a
-              href="https://www.linkedin.com/in/michael-kihuyu-977a0b266/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '12px 28px',
-                borderRadius: '999px',
-                border: '1px solid rgba(250, 247, 242, 0.2)',
-                color: 'rgba(250, 247, 242, 0.8)',
-                fontSize: '14px',
-                fontWeight: 500,
-                textDecoration: 'none',
-              }}
-            >
-              Connect on LinkedIn ↗
-            </a>
+        <div className="relative">
+          <div className="max-w-[640px]">
+            <SectionLabel onInk>Let&apos;s talk</SectionLabel>
+            <h2 className="mb-6 text-[clamp(40px,6vw,80px)] font-semibold leading-[1.02] tracking-[-0.035em]">
+              <Reveal items={headingWords} stagger={45} />
+            </h2>
+            <p className="mb-12 max-w-[460px] text-[clamp(17px,1.6vw,21px)] leading-[1.5] text-on-ink-muted">
+              Whatever brings you here, <strong className="font-semibold text-on-ink">my inbox is open</strong>.
+              Pick the door that fits.
+            </p>
           </div>
+
+          <ul className="grid gap-3 md:grid-cols-3">
+            {DOORS.map((door) => {
+              const external = door.href.startsWith('http');
+              return (
+                <li key={door.question}>
+                  <a
+                    href={door.href}
+                    target={external ? '_blank' : undefined}
+                    rel={external ? 'noopener noreferrer' : undefined}
+                    className="group flex h-full flex-col justify-between gap-8 rounded-card bg-white/6 p-6 no-underline ring-1 ring-white/10 transition-colors duration-300 hover:bg-white/10"
+                  >
+                    <span className="text-[21px] font-semibold leading-[1.2] tracking-[-0.02em] text-on-ink">
+                      {door.question}
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-[15px] font-medium text-system-on-ink">
+                      {door.action}
+                      {external ? (
+                        <ArrowUpRight aria-hidden="true" size={16} strokeWidth={2.25} />
+                      ) : (
+                        <ChevronRight
+                          aria-hidden="true"
+                          size={18}
+                          strokeWidth={2.25}
+                          className="transition-transform duration-300 group-hover:translate-x-0.5"
+                        />
+                      )}
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </section>

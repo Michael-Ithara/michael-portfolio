@@ -2,12 +2,13 @@ import Image from 'next/image';
 import Reveal from './Reveal';
 import { toWords } from './words';
 import FadeIn from './FadeIn';
+import { ChevronLink, SectionLabel } from './ui';
+import AtAGlance from './AtAGlance';
 
 const headingWords = [
   ...toWords('The person'),
-  '\n',
-  ...toWords('behind the work').map((w, i) => (
-    <span key={`about-accent-${i}`} style={{ fontStyle: 'italic', color: 'var(--accent)' }}>
+  ...toWords('behind the work.').map((w, i) => (
+    <span key={`about-accent-${i}`} className="text-faint">
       {w}
     </span>
   )),
@@ -18,7 +19,7 @@ const paragraphs = [
     I&apos;m Michael, a Product Engineer from Nairobi who&apos;s spent the last
     few years building AI-native systems across two continents. I&apos;ve
     learned{' '}
-    <strong className="text-accent font-semibold">
+    <strong className="font-semibold text-text">
       what makes technology actually useful
     </strong>{' '}
     to the people it&apos;s meant to serve.
@@ -27,7 +28,7 @@ const paragraphs = [
     I&apos;ve worked on speaker pipelines for European startup conferences,
     solar energy platforms, and personal knowledge tools. The domains are
     different. The approach stays the same:{' '}
-    <strong className="text-accent font-semibold">
+    <strong className="font-semibold text-text">
       understand the person first, then build the thing
     </strong>
     .
@@ -40,155 +41,70 @@ const paragraphs = [
   <>
     I&apos;m always open to interesting people working on things that matter.
     If that&apos;s you,{' '}
-    <strong className="text-accent font-semibold">let&apos;s talk</strong>.
+    <strong className="font-semibold text-text">let&apos;s talk</strong>.
   </>,
+];
+
+const links = [
+  { label: 'Email', href: 'mailto:mkihuyu020@gmail.com' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/michael-kihuyu-977a0b266/' },
+  { label: 'GitHub', href: 'https://github.com/Michael-Ithara' },
 ];
 
 export default function About() {
   return (
-    <section
-      id="about"
-      style={{
-        padding: '120px 24px',
-        maxWidth: '1100px',
-        margin: '0 auto',
-      }}
-    >
-      {/* Section label */}
-      <span
-        style={{
-          fontSize: '11px',
-          letterSpacing: '0.12em',
-          textTransform: 'uppercase',
-          color: 'var(--accent)',
-          fontWeight: 500,
-          display: 'block',
-          marginBottom: '64px',
-        }}
-      >
-        About
-      </span>
-
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '80px',
-          alignItems: 'start',
-        }}
-      >
-        {/* Left: text */}
+    <section id="about" className="mx-auto max-w-[1120px] px-4 py-24 sm:px-6 md:py-32">
+      <div className="grid grid-cols-1 items-start gap-12 md:grid-cols-2 md:gap-20">
         <div>
-          <h2
-            style={{
-              fontFamily: 'Fraunces, serif',
-              fontSize: 'clamp(32px, 4vw, 48px)',
-              fontWeight: 600,
-              color: 'var(--text)',
-              lineHeight: 1.15,
-              marginBottom: '32px',
-            }}
-          >
+          <SectionLabel>About</SectionLabel>
+          <h2 className="mb-10 text-[clamp(34px,4.6vw,56px)] font-semibold leading-[1.06] tracking-[-0.03em] text-text">
             <Reveal items={headingWords} stagger={45} />
           </h2>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div className="flex flex-col gap-5">
             {paragraphs.map((para, i) => (
               <FadeIn key={i} delay={i * 80}>
-                <p
-                  style={{
-                    fontSize: '16px',
-                    color: 'var(--text-muted)',
-                    lineHeight: 1.75,
-                  }}
-                >
-                  {para}
-                </p>
+                <p className="text-[17px] leading-[1.65] text-muted">{para}</p>
               </FadeIn>
             ))}
           </div>
 
-          {/* Links */}
-          <div style={{ display: 'flex', gap: '24px', marginTop: '40px' }}>
-            {[
-              { label: 'Email', href: 'mailto:mkihuyu020@gmail.com' },
-              { label: 'LinkedIn', href: 'https://www.linkedin.com/in/michael-kihuyu-977a0b266/' },
-              { label: 'GitHub', href: 'https://github.com/Michael-Ithara' },
-            ].map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="accent-link"
-                style={{
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  color: 'var(--text)',
-                  textDecoration: 'none',
-                }}
-              >
+          <div className="mt-10 flex flex-wrap gap-x-8 gap-y-2">
+            {links.map((link) => (
+              <ChevronLink key={link.label} href={link.href}>
                 {link.label}
-              </a>
+              </ChevronLink>
             ))}
           </div>
         </div>
 
-        {/* Right: photos */}
-        <FadeIn delay={120} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {/* Primary photo */}
-          <div
-            style={{
-              position: 'relative',
-              borderRadius: '16px',
-              overflow: 'hidden',
-              aspectRatio: '4/5',
-              background: 'var(--surface)',
-            }}
-          >
+        <FadeIn delay={120} className="flex flex-col gap-4 md:sticky md:top-24">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-tile bg-surface">
             <Image
               src="/michael-about.jpg"
               alt="Michael Kihuyu"
               fill
-              style={{ objectFit: 'cover', objectPosition: 'top' }}
+              className="object-cover object-top"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
 
-          {/* Secondary photo */}
-          <div
-            style={{
-              position: 'relative',
-              borderRadius: '16px',
-              overflow: 'hidden',
-              aspectRatio: '16/9',
-              background: 'var(--surface)',
-            }}
-          >
+          <figure className="relative aspect-[16/9] overflow-hidden rounded-tile bg-surface">
             <Image
               src="/michael-building.jpg"
               alt="Michael at the European Defense Hackathon, Tallinn"
               fill
-              style={{ objectFit: 'cover' }}
+              className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
-            <div
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                padding: '16px',
-                background: 'linear-gradient(to top, rgba(0,0,0,0.6), transparent)',
-              }}
-            >
-              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '12px' }}>
-                European Defense Hackathon · Tallinn, Estonia
-              </p>
-            </div>
-          </div>
+            <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pb-4 pt-10 text-[13px] font-medium text-white/90">
+              European Defense Hackathon · Tallinn, Estonia
+            </figcaption>
+          </figure>
         </FadeIn>
       </div>
+
+      <AtAGlance />
     </section>
   );
 }

@@ -1,53 +1,33 @@
+import AppearanceSwitcher from './AppearanceSwitcher';
+
+const links = [
+  { label: 'mkihuyu020@gmail.com', href: 'mailto:mkihuyu020@gmail.com' },
+  { label: 'GitHub', href: 'https://github.com/Michael-Ithara' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/michael-kihuyu-977a0b266/' },
+];
+
 export default function Footer() {
   return (
-    <footer
-      style={{
-        borderTop: '1px solid var(--border)',
-        padding: '32px 24px',
-        maxWidth: '1100px',
-        margin: '0 auto',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '16px',
-        }}
-      >
-        <span
-          style={{
-            fontFamily: 'Fraunces, serif',
-            fontSize: '14px',
-            color: 'var(--text-muted)',
-          }}
-        >
-          Michael Kihuyu · {new Date().getFullYear()}
+    <footer className="mx-auto max-w-[1120px] px-4 sm:px-6">
+      <div className="flex flex-col gap-4 border-t border-border py-8 text-[13px] text-muted sm:flex-row sm:items-center sm:justify-between">
+        <span>
+          © {new Date().getFullYear()} Michael Kihuyu · Nairobi, Kenya
         </span>
-
-        <div style={{ display: 'flex', gap: '24px' }}>
-          {[
-            { label: 'mkihuyu020@gmail.com', href: 'mailto:mkihuyu020@gmail.com' },
-            { label: 'GitHub', href: 'https://github.com/Michael-Ithara' },
-            { label: 'LinkedIn', href: 'https://www.linkedin.com/in/michael-kihuyu-977a0b266/' },
-          ].map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target={link.href.startsWith('http') ? '_blank' : undefined}
-              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              style={{
-                fontSize: '12px',
-                color: 'var(--text-faint)',
-                textDecoration: 'none',
-              }}
-            >
-              {link.label}
-            </a>
+        <AppearanceSwitcher />
+        <ul className="flex flex-wrap gap-x-6 gap-y-2">
+          {links.map((link) => (
+            <li key={link.label}>
+              <a
+                href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="text-muted no-underline transition-colors duration-300 hover:text-text"
+              >
+                {link.label}
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </footer>
   );

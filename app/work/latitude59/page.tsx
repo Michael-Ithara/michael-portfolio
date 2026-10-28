@@ -1,29 +1,38 @@
 import { Fragment } from 'react';
-import Link from 'next/link';
+import type { Metadata } from 'next';
 import PipelineDiagram from './PipelineDiagram';
-import Reveal from '../../components/Reveal';
 import { toWords } from '../../components/words';
-import FadeIn from '../../components/FadeIn';
+import {
+  type Beat,
+  CaseBody,
+  CaseHeader,
+  CaseSection,
+  MetaGrid,
+  NextProject,
+  StatStrip,
+  accent,
+  strong,
+} from '../CaseStudy';
 
-const strong = (text: string, key: string) => (
-  <strong key={key} className="text-accent font-semibold">
-    {text}
-  </strong>
-);
+export const metadata: Metadata = {
+  title: 'Latitude59 Speaker Portal',
+  description: '80 speakers. Two problems feeding each other. One system to solve both.',
+  openGraph: {
+    title: 'Latitude59 Speaker Portal · Michael Kihuyu',
+    description: '80 speakers. Two problems feeding each other. One system to solve both.',
+  },
+};
 
 const headingWords = [
   ...toWords('Latitude59'),
   '\n',
-  ...toWords('Speaker Portal').map((w, i) => (
-    <span key={`l59-accent-${i}`} style={{ fontStyle: 'italic', color: 'var(--accent)' }}>
-      {w}
-    </span>
-  )),
+  ...toWords('Speaker Portal').map((w, i) => accent(w, `l59-accent-${i}`)),
 ];
 
-const SECTIONS = [
+const SECTIONS: { beat: Beat; heading: string; paragraphs: React.ReactNode[] }[] = [
   {
-    heading: 'The problem nobody had named yet',
+    beat: 'The person',
+    heading: 'Start with one speaker',
     paragraphs: [
       <Fragment key="p1">
         Latitude59 is one of Europe&apos;s top startup conferences: 80
@@ -40,18 +49,30 @@ const SECTIONS = [
         moment they&apos;re invited to the moment they walk off stage.
       </Fragment>,
       <Fragment key="p3">
-        What I found were {strong('two problems feeding each other', 'p3-b')}.
         Speakers had no single place to track what was expected of them,
-        submit materials, confirm travel, or know what came next. Every gap
-        became an email to the organiser. The organiser, meanwhile, had no way
-        to see where any speaker stood, so they couldn&apos;t act until
-        something broke. Speaker confusion generated admin work. Admin
-        blindness created more speaker confusion. Solving one without the
-        other would only add pressure to the one left standing.
+        submit materials, confirm travel, or know what came next.{' '}
+        {strong('Every gap became an email to the organiser', 'p3-b')}.
       </Fragment>,
     ],
   },
   {
+    beat: 'The structure',
+    heading: 'Two problems feeding each other',
+    paragraphs: [
+      <Fragment key="p1">
+        What I found were {strong('two problems feeding each other', 'p1-b')}.
+        The organiser, meanwhile, had no way to see where any speaker stood,
+        so they couldn&apos;t act until something broke.
+      </Fragment>,
+      <Fragment key="p2">
+        Speaker confusion generated admin work. Admin blindness created more
+        speaker confusion. Solving one without the other would only add
+        pressure to the one left standing.
+      </Fragment>,
+    ],
+  },
+  {
+    beat: 'The system',
     heading: 'What we built',
     paragraphs: [
       <Fragment key="p1">
@@ -73,13 +94,13 @@ const SECTIONS = [
       <Fragment key="p4">
         The infrastructure underneath connects eight services: Salesforce, a
         token authentication system, automated email, travel agent
-        integration, ticketing, and calendar sync. A speaker confirmed in
-        Salesforce {strong('triggers the entire onboarding sequence automatically', 'p4-b')}.
+        integration, ticketing, and calendar sync.
       </Fragment>,
     ],
   },
   {
-    heading: 'The process',
+    beat: 'The system',
+    heading: 'How we worked',
     paragraphs: [
       <Fragment key="p1">
         A month of problem discovery and architecture{' '}
@@ -98,7 +119,26 @@ const SECTIONS = [
     ],
   },
   {
-    heading: 'The outcome',
+    beat: 'The edges',
+    heading: "Built for people who won't log in",
+    paragraphs: [
+      <Fragment key="p1">
+        Speakers are busy, external, and with the conference for two days.
+        Asking them to create one more account would have been one more gap.
+        So the portal runs on{' '}
+        {strong('secure token links sent by email', 'p1-b')}: one click, straight
+        into their own journey, nothing to remember.
+      </Fragment>,
+      <Fragment key="p2">
+        The organiser side got the same treatment. A speaker confirmed in
+        Salesforce {strong('triggers the entire onboarding sequence automatically', 'p2-b')},
+        so nobody has to remember to start it either.
+      </Fragment>,
+    ],
+  },
+  {
+    beat: 'The outcome',
+    heading: 'What changed',
     paragraphs: [
       <Fragment key="p1">
         80 speakers managed through a single system for Latitude59&apos;s 2026
@@ -108,7 +148,17 @@ const SECTIONS = [
       </Fragment>,
       <Fragment key="p2">
         And the model is repeatable. Every conference in the world has this
-        problem. We built the first version of the solution.
+        problem. We built the first version of the solution. The next version
+        is{' '}
+        <a
+          href="https://onboarder.work/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-system underline underline-offset-4"
+        >
+          Onboarder
+        </a>
+        , the product I&apos;m building with my cofounders.
       </Fragment>,
     ],
   },
@@ -116,85 +166,37 @@ const SECTIONS = [
 
 export default function Latitude59() {
   return (
-    <main style={{ maxWidth: '800px', margin: '0 auto', padding: '120px 24px 80px' }}>
-
-      <Link href="/#work" style={{ fontSize: '14px', color: 'var(--text-muted)', textDecoration: 'none', display: 'inline-block', marginBottom: '48px' }}>
-        ← Back to work
-      </Link>
-
-      <span style={{ fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 500, display: 'block', marginBottom: '16px' }}>
-        Conference Operations · Estonia · 2026
-      </span>
-
-      <h1 style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 600, color: 'var(--text)', lineHeight: 1.05, marginBottom: '24px' }}>
-        <Reveal items={headingWords} stagger={45} />
-      </h1>
-
-      <p style={{ fontSize: '20px', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '64px', maxWidth: '580px' }}>
-        80 speakers. Two problems feeding each other. One system to solve both.
-      </p>
-
-      {/* Meta */}
-      <FadeIn
-        style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', padding: '32px', borderRadius: '16px', background: 'var(--surface)', border: '1px solid var(--border)', marginBottom: '64px' }}
-      >
-        {[
+    <main className="pt-28 md:pt-36">
+      <CaseHeader
+        slug="latitude59"
+        eyebrow="Conference Operations · Estonia · 2026"
+        heading={headingWords}
+        subline="80 speakers. Two problems feeding each other. One system to solve both."
+      />
+      <MetaGrid
+        items={[
           { label: 'Role', value: 'Product Engineer' },
           { label: 'Team', value: '4 engineers' },
           { label: 'Timeline', value: 'Jan – May 2026' },
           { label: 'Speakers', value: '80 managed' },
-        ].map((item) => (
-          <div key={item.label}>
-            <span style={{ fontSize: '11px', color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block', marginBottom: '6px' }}>{item.label}</span>
-            <span style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text)' }}>{item.value}</span>
-          </div>
+        ]}
+      />
+      <CaseBody>
+        {SECTIONS.map((section) => (
+          <Fragment key={section.heading}>
+            <CaseSection beat={section.beat} heading={section.heading} paragraphs={section.paragraphs} />
+            {section.heading === 'What we built' && <PipelineDiagram />}
+          </Fragment>
         ))}
-      </FadeIn>
-
-      {/* Body */}
-      {SECTIONS.map((section) => (
-        <Fragment key={section.heading}>
-          <FadeIn style={{ marginBottom: '56px' }}>
-            <h2 style={{ fontFamily: 'Fraunces, serif', fontSize: '24px', fontWeight: 600, color: 'var(--text)', marginBottom: '20px' }}>
-              {section.heading}
-            </h2>
-            {section.paragraphs.map((para, i) => (
-              <p key={i} style={{ fontSize: '16px', color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: '16px' }}>
-                {para}
-              </p>
-            ))}
-            <div style={{ height: '1px', background: 'var(--border)', marginTop: '48px' }} />
-          </FadeIn>
-          {section.heading === 'What we built' && <PipelineDiagram />}
-        </Fragment>
-      ))}
-
-      {/* Outcome stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '64px' }}>
-        {[
-          { stat: '80', label: 'Speakers managed' },
-          { stat: '9', label: 'Pipeline phases' },
-          { stat: '8', label: 'Integrated services' },
-        ].map((item, i) => (
-          <FadeIn
-            key={item.stat}
-            delay={i * 100}
-            style={{ padding: '32px', borderRadius: '16px', background: 'var(--surface)', border: '1px solid var(--border)', textAlign: 'center' }}
-          >
-            <span style={{ fontFamily: 'Fraunces, serif', fontSize: '48px', fontWeight: 600, color: 'var(--accent)', display: 'block', marginBottom: '8px' }}>{item.stat}</span>
-            <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{item.label}</span>
-          </FadeIn>
-        ))}
-      </div>
-
-      {/* Next */}
-      <div style={{ paddingTop: '48px', borderTop: '1px solid var(--border)' }}>
-        <span style={{ fontSize: '11px', color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block', marginBottom: '16px' }}>Next project</span>
-        <Link href="/work/second-brain" style={{ fontFamily: 'Fraunces, serif', fontSize: '28px', fontWeight: 600, color: 'var(--text)', textDecoration: 'none' }}>
-          Second Brain →
-        </Link>
-      </div>
-
+        <StatStrip
+          stats={[
+            { stat: '80', label: 'Speakers managed' },
+            { stat: '9', label: 'Pipeline phases' },
+            { stat: '8', label: 'Integrated services' },
+          ]}
+        />
+        <NextProject href="/work/second-brain" eyebrow="Next project" title="Second Brain" />
+      </CaseBody>
     </main>
   );
 }

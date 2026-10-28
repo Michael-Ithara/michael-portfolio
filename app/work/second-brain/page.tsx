@@ -1,24 +1,32 @@
 import { Fragment } from 'react';
-import Link from 'next/link';
-import Reveal from '../../components/Reveal';
-import FadeIn from '../../components/FadeIn';
+import type { Metadata } from 'next';
+import {
+  type Beat,
+  CaseBody,
+  CaseHeader,
+  CaseSection,
+  LiveLink,
+  MetaGrid,
+  NextProject,
+  accent,
+  strong,
+} from '../CaseStudy';
 
-const strong = (text: string, key: string) => (
-  <strong key={key} className="text-accent font-semibold">
-    {text}
-  </strong>
-);
+export const metadata: Metadata = {
+  title: 'Second Brain',
+  description: 'Most people store knowledge. Almost nobody can find it when they need it.',
+  openGraph: {
+    title: 'Second Brain · Michael Kihuyu',
+    description: 'Most people store knowledge. Almost nobody can find it when they need it.',
+  },
+};
 
-const headingWords = [
-  'Second',
-  <span key="sb-accent" style={{ fontStyle: 'italic', color: 'var(--accent)' }}>
-    Brain
-  </span>,
-];
+const headingWords = ['Second', accent('Brain', 'sb-accent')];
 
-const SECTIONS = [
+const SECTIONS: { beat: Beat; heading: string; paragraphs: React.ReactNode[] }[] = [
   {
-    heading: 'The problem',
+    beat: 'The person',
+    heading: 'Everyone who reads for a living',
     paragraphs: [
       <Fragment key="p1">
         Knowledge workers, students, builders, researchers, anyone who reads
@@ -26,15 +34,22 @@ const SECTIONS = [
         Notes in five apps. Articles bookmarked and never reopened. Insights
         written down, then effectively lost.
       </Fragment>,
-      <Fragment key="p2">
+    ],
+  },
+  {
+    beat: 'The structure',
+    heading: 'Captured knowledge goes inert',
+    paragraphs: [
+      <Fragment key="p1">
         The problem isn&apos;t capturing knowledge. It&apos;s that captured
         knowledge goes inert: you can&apos;t search it meaningfully,
         can&apos;t see connections across it, and can&apos;t{' '}
-        {strong('have a conversation with it', 'p2-b')}.
+        {strong('have a conversation with it', 'p1-b')}.
       </Fragment>,
     ],
   },
   {
+    beat: 'The system',
     heading: 'What I built and why',
     paragraphs: [
       <Fragment key="p1">
@@ -46,13 +61,12 @@ const SECTIONS = [
       <Fragment key="p2">
         So I built a tool that lets you write notes, paste URLs, or import
         content, then ask questions in plain language across everything
-        you&apos;ve ever saved. The AI only answers from your own knowledge
-        base: {strong('no hallucinations, no invented context', 'p2-b')}. Just
-        your own thinking, made queryable and connected.
+        you&apos;ve ever saved.
       </Fragment>,
     ],
   },
   {
+    beat: 'The system',
     heading: 'How it works',
     paragraphs: [
       <Fragment key="p1">
@@ -71,6 +85,19 @@ const SECTIONS = [
     ],
   },
   {
+    beat: 'The edges',
+    heading: 'Answers you can trust',
+    paragraphs: [
+      <Fragment key="p1">
+        A knowledge tool that makes things up is worse than no tool at all. So
+        the AI only answers from your own knowledge base:{' '}
+        {strong('no hallucinations, no invented context', 'p1-b')}. Just your
+        own thinking, made queryable and connected.
+      </Fragment>,
+    ],
+  },
+  {
+    beat: 'The outcome',
     heading: 'Where it is now',
     paragraphs: [
       <Fragment key="p1">
@@ -83,70 +110,32 @@ const SECTIONS = [
 
 export default function SecondBrain() {
   return (
-    <main style={{ maxWidth: '800px', margin: '0 auto', padding: '120px 24px 80px' }}>
-
-      <Link href="/#work" style={{ fontSize: '14px', color: 'var(--text-muted)', textDecoration: 'none', display: 'inline-block', marginBottom: '48px' }}>
-        ← Back to work
-      </Link>
-
-      <span style={{ fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 500, display: 'block', marginBottom: '16px' }}>
-        Personal Knowledge Tool · 2026
-      </span>
-
-      <h1 style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 600, color: 'var(--text)', lineHeight: 1.05, marginBottom: '24px' }}>
-        <Reveal items={headingWords} stagger={60} />
-      </h1>
-
-      <p style={{ fontSize: '20px', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '64px', maxWidth: '580px' }}>
-        Most people store knowledge. Almost nobody can find it when they need it.
-      </p>
-
-      {/* Meta */}
-      <FadeIn
-        style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', padding: '32px', borderRadius: '16px', background: 'var(--surface)', border: '1px solid var(--border)', marginBottom: '64px' }}
-      >
-        {[
+    <main className="pt-28 md:pt-36">
+      <CaseHeader
+        slug="second-brain"
+        eyebrow="Personal Knowledge Tool · 2026"
+        heading={headingWords}
+        subline="Most people store knowledge. Almost nobody can find it when they need it."
+      />
+      <MetaGrid
+        items={[
           { label: 'Role', value: 'Solo builder' },
           { label: 'Stack', value: 'React · Supabase · Claude' },
           { label: 'Status', value: 'Live · in development' },
-        ].map((item) => (
-          <div key={item.label}>
-            <span style={{ fontSize: '11px', color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block', marginBottom: '6px' }}>{item.label}</span>
-            <span style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text)' }}>{item.value}</span>
-          </div>
+        ]}
+      />
+      <CaseBody>
+        {SECTIONS.map((section) => (
+          <CaseSection
+            key={section.heading}
+            beat={section.beat}
+            heading={section.heading}
+            paragraphs={section.paragraphs}
+          />
         ))}
-      </FadeIn>
-
-      {SECTIONS.map((section) => (
-        <FadeIn key={section.heading} style={{ marginBottom: '56px' }}>
-          <h2 style={{ fontFamily: 'Fraunces, serif', fontSize: '24px', fontWeight: 600, color: 'var(--text)', marginBottom: '20px' }}>
-            {section.heading}
-          </h2>
-          {section.paragraphs.map((para, i) => (
-            <p key={i} style={{ fontSize: '16px', color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: '16px' }}>
-              {para}
-            </p>
-          ))}
-          <div style={{ height: '1px', background: 'var(--border)', marginTop: '48px' }} />
-        </FadeIn>
-      ))}
-
-      <a
-        href="https://the-second-brain.netlify.app"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '12px 28px', borderRadius: '999px', background: 'var(--accent)', color: 'white', fontSize: '14px', fontWeight: 500, textDecoration: 'none', marginBottom: '64px' }}
-      >
-        Try Second Brain live ↗
-      </a>
-
-      <div style={{ paddingTop: '48px', borderTop: '1px solid var(--border)' }}>
-        <span style={{ fontSize: '11px', color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block', marginBottom: '16px' }}>Next project</span>
-        <Link href="/work/solarios" style={{ fontFamily: 'Fraunces, serif', fontSize: '28px', fontWeight: 600, color: 'var(--text)', textDecoration: 'none' }}>
-          Solarios →
-        </Link>
-      </div>
-
+        <LiveLink href="https://the-second-brain.netlify.app">Try Second Brain live</LiveLink>
+        <NextProject href="/work/solarios" eyebrow="Next project" title="Solarios" />
+      </CaseBody>
     </main>
   );
 }

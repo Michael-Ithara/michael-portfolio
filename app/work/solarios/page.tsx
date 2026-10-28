@@ -1,23 +1,32 @@
 import { Fragment } from 'react';
-import Link from 'next/link';
-import Reveal from '../../components/Reveal';
-import FadeIn from '../../components/FadeIn';
+import type { Metadata } from 'next';
+import {
+  type Beat,
+  CaseBody,
+  CaseHeader,
+  CaseSection,
+  LiveLink,
+  MetaGrid,
+  NextProject,
+  accent,
+  strong,
+} from '../CaseStudy';
 
-const strong = (text: string, key: string) => (
-  <strong key={key} className="text-accent font-semibold">
-    {text}
-  </strong>
-);
+export const metadata: Metadata = {
+  title: 'Solarios',
+  description: "People with solar panels still don't understand their own energy.",
+  openGraph: {
+    title: 'Solarios · Michael Kihuyu',
+    description: "People with solar panels still don't understand their own energy.",
+  },
+};
 
-const headingWords = [
-  <span key="solarios-accent" style={{ fontStyle: 'italic', color: 'var(--accent)' }}>
-    Solarios
-  </span>,
-];
+const headingWords = [accent('Solarios', 'solarios-accent')];
 
-const SECTIONS = [
+const SECTIONS: { beat: Beat; heading: string; paragraphs: React.ReactNode[] }[] = [
   {
-    heading: 'The problem',
+    beat: 'The person',
+    heading: 'Homeowners with panels on the roof',
     paragraphs: [
       <Fragment key="p1">
         Millions of households have solar panels. Most of them have no real
@@ -25,14 +34,21 @@ const SECTIONS = [
         versus drawing from the grid, or what habits are quietly costing
         them.
       </Fragment>,
-      <Fragment key="p2">
+    ],
+  },
+  {
+    beat: 'The structure',
+    heading: 'Numbers nobody acts on',
+    paragraphs: [
+      <Fragment key="p1">
         The data exists. It just isn&apos;t legible or actionable for the
         average homeowner. Monitoring tools show numbers.{' '}
-        {strong('Nobody changes their behaviour because of a number', 'p2-b')}.
+        {strong('Nobody changes their behaviour because of a number', 'p1-b')}.
       </Fragment>,
     ],
   },
   {
+    beat: 'The system',
     heading: 'What I built',
     paragraphs: [
       <Fragment key="p1">
@@ -57,7 +73,8 @@ const SECTIONS = [
     ],
   },
   {
-    heading: 'The design intention',
+    beat: 'The edges',
+    heading: 'Built for a decision, not a dashboard',
     paragraphs: [
       <Fragment key="p1">
         Solarios isn&apos;t just a monitoring tool. It&apos;s{' '}
@@ -73,7 +90,8 @@ const SECTIONS = [
     ],
   },
   {
-    heading: 'The outcome',
+    beat: 'The outcome',
+    heading: 'Graded with distinction',
     paragraphs: [
       <Fragment key="p1">
         Final year capstone at Strathmore University. Built with real IoT
@@ -91,71 +109,33 @@ const SECTIONS = [
 
 export default function Solarios() {
   return (
-    <main style={{ maxWidth: '800px', margin: '0 auto', padding: '120px 24px 80px' }}>
-
-      <Link href="/#work" style={{ fontSize: '14px', color: 'var(--text-muted)', textDecoration: 'none', display: 'inline-block', marginBottom: '48px' }}>
-        ← Back to work
-      </Link>
-
-      <span style={{ fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 500, display: 'block', marginBottom: '16px' }}>
-        Solar Energy Platform · 2025
-      </span>
-
-      <h1 style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 600, color: 'var(--text)', lineHeight: 1.05, marginBottom: '24px' }}>
-        <Reveal items={headingWords} stagger={60} />
-      </h1>
-
-      <p style={{ fontSize: '20px', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '64px', maxWidth: '580px' }}>
-        People with solar panels still don&apos;t understand their own energy.
-      </p>
-
-      {/* Meta */}
-      <FadeIn
-        style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', padding: '32px', borderRadius: '16px', background: 'var(--surface)', border: '1px solid var(--border)', marginBottom: '64px' }}
-      >
-        {[
+    <main className="pt-28 md:pt-36">
+      <CaseHeader
+        slug="solarios"
+        eyebrow="Solar Energy Platform · 2025"
+        heading={headingWords}
+        subline="People with solar panels still don't understand their own energy."
+      />
+      <MetaGrid
+        items={[
           { label: 'Role', value: 'Solo builder' },
           { label: 'Context', value: 'Final year capstone' },
           { label: 'Grade', value: 'Distinction (A)' },
           { label: 'Focus', value: 'Behaviour change + AI' },
-        ].map((item) => (
-          <div key={item.label}>
-            <span style={{ fontSize: '11px', color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block', marginBottom: '6px' }}>{item.label}</span>
-            <span style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text)' }}>{item.value}</span>
-          </div>
+        ]}
+      />
+      <CaseBody>
+        {SECTIONS.map((section) => (
+          <CaseSection
+            key={section.heading}
+            beat={section.beat}
+            heading={section.heading}
+            paragraphs={section.paragraphs}
+          />
         ))}
-      </FadeIn>
-
-      {SECTIONS.map((section) => (
-        <FadeIn key={section.heading} style={{ marginBottom: '56px' }}>
-          <h2 style={{ fontFamily: 'Fraunces, serif', fontSize: '24px', fontWeight: 600, color: 'var(--text)', marginBottom: '20px' }}>
-            {section.heading}
-          </h2>
-          {section.paragraphs.map((para, i) => (
-            <p key={i} style={{ fontSize: '16px', color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: '16px' }}>
-              {para}
-            </p>
-          ))}
-          <div style={{ height: '1px', background: 'var(--border)', marginTop: '48px' }} />
-        </FadeIn>
-      ))}
-
-      <a
-        href="https://solarios-v2.vercel.app"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '12px 28px', borderRadius: '999px', background: 'var(--accent)', color: 'white', fontSize: '14px', fontWeight: 500, textDecoration: 'none', marginBottom: '64px' }}
-      >
-        Try Solarios live ↗
-      </a>
-
-      <div style={{ paddingTop: '48px', borderTop: '1px solid var(--border)' }}>
-        <span style={{ fontSize: '11px', color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block', marginBottom: '16px' }}>Back to start</span>
-        <Link href="/#work" style={{ fontFamily: 'Fraunces, serif', fontSize: '28px', fontWeight: 600, color: 'var(--text)', textDecoration: 'none' }}>
-          ← All projects
-        </Link>
-      </div>
-
+        <LiveLink href="https://solarios-v2.vercel.app">Try Solarios live</LiveLink>
+        <NextProject href="/#work" eyebrow="Back to start" title="All projects" />
+      </CaseBody>
     </main>
   );
 }

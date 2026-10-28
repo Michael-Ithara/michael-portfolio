@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Brand mark. Same geometry as app/components/brandMark.ts; keep them in sync. -->
+  <style>
+    .k { stroke: #5856D6; }
+    @media (prefers-color-scheme: dark) { .k { stroke: #8E8CFF; } }
+  </style>
+  <g transform="translate(-2.5 3)">
+    <path class="k" d="M20 14 V50 M20 36 L38 18 M27 30 L42 50" fill="none" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="43" cy="14" r="11" fill="#E35500"/>
+  </g>
+</svg>
